@@ -1,6 +1,10 @@
 module SpatialTranscriptomicsGPs
 
-# Write your package code here.
+# Dependencies
+using LinearAlgebra
+using Statistics
+
+# Code files
 
 include("fastlmm.jl")
 
