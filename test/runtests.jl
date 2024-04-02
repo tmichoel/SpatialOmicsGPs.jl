@@ -1,6 +1,13 @@
 using SpatialTranscriptomicsGPs
 using Test
 
+using LinearAlgebra
+using Statistics
+
 @testset "SpatialTranscriptomicsGPs.jl" begin
-    # Write your tests here.
+    @testset "FaSTLMM" begin
+        @testset "FaSTLMM" begin
+            include("FaSTLMM_tests.jl")
+        end
+    end
 end

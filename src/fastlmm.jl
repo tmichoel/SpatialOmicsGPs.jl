@@ -12,16 +12,19 @@ function fastlmm_fullrank(y,X,K)
     β, σ², δ = fastlmm_mle(yr, Xr, λ);
 end
 
-function beta_mle_fullrank(δ, λ, yr, Xr=[])
-    # Compute the MLE of the fixed effects weights
-    if isempty(Xr)
-        return 0.0
-    else
-        A = sum([Xr[i,:]' * Xr[i,:] ./ (λ[i] + δ) for i in eachindex(λ)])
-        b = sum([Xr[i,:]' * yr[i] ./ (λ[i] + δ) for i in eachindex(λ)])
-        return A \ b
-    end
-    
+function delta_mle_fullrank(λ, yr, Xr=[])
+    # Compute the MLE of the variance parameter
+    res = Optim.optimize(x -> minus_log_like_fullrank(softplus(x), λ, yr, Xr), [0.0], LBFGS(); autodiff = :forward);
+    xmin = res.minimizer;
+    return softplus(xmin), res
+end
+
+function minus_log_like_fullrank(δ, λ, yr, Xr=[])
+    # Compute the minus log-likelihood of the model, scaled by the number of samples and without constant factors
+    #δ = softplus(x);
+    β = beta_mle_fullrank(δ, λ, yr, Xr);
+    σ² = sigma2_mle_fullrank(δ, λ, β, yr, Xr);
+    return  0.5 * mean(log.(λ .+ δ)) .+ 0.5 * log(σ²)
 end
 
 function sigma2_mle_fullrank(δ, λ, β, yr, Xr=[])
@@ -33,9 +36,18 @@ function sigma2_mle_fullrank(δ, λ, β, yr, Xr=[])
     end
 end
 
-function log_like_fullrank(δ, λ, yr, Xr=[])
-    # Compute the log-likelihood of the model
-    β = beta_mle_fullrank(yr, Xr, λ, δ);
-    σ² = sigma2_mle_fullrank(yr, Xr, λ, δ, β);
-    return  - 0.5 * mean(log.(λ .+ δ))  - 0.5 * log(σ²)
+function beta_mle_fullrank(δ, λ, yr, Xr=[])
+    # Compute the MLE of the fixed effects weights
+    if isempty(Xr)
+        return 0.0
+    else
+        A = sum([Xr[i,:] * Xr[i,:]' ./ (λ[i] + δ) for i in eachindex(λ)]) # counterintuitive order of transpose in Xr, because a Matrix row is a (column) Vector
+        b = sum([Xr[i,:] * yr[i] ./ (λ[i] + δ) for i in eachindex(λ)]) # counterintuitive order of transpose in Xr, because a Matrix row is a (column) Vector
+        return A \ b
+    end  
 end
+
+function softplus(x)
+    return log.(1 .+ exp.(x))
+end
+
