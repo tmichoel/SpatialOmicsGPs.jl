@@ -2,9 +2,14 @@
 
 A crude (for now) implementation of various Gaussian process models for [spatial transcriptomics][4] data. Currently planned to contain implementations of:
 
-- FaST-LMM [Lippert et al.][5]
-- SpatialDE [Svensson et al.][1]
-- Spatial Variance Component Analysis [Arnol et al.][2]
+**FaST-LMM** [[Lippert et al.]][5]
+
+- [x] LMMs/GPs with full-rank kernel matrix
+- [ ] LMMs/GPs with low-rank kernel matrix factorization
+
+**SpatialDE** [[Svensson et al.]][1]
+
+**Spatial Variance Component Analysis** [[Arnol et al.]][2]
 
 I'm also hoping to implement the method of [Greengard et al.][3] to see if it leads to further speed-up.
 
