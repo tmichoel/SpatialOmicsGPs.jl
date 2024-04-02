@@ -30,7 +30,7 @@ end
 function sigma2_mle_fullrank(δ, λ, β, yr, Xr=[])
     # Compute the MLE of the variance parameter
     if isempty(Xr)
-        return mean(yr.^2 / (λ .+ δ))
+        return mean(yr.^2 ./ (λ .+ δ))
     else
         return mean( (yr .- Xr * β).^2 ./ (λ .+ δ) )
     end
