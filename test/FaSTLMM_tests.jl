@@ -20,6 +20,11 @@ yr = EF.vectors' * y;
     β_exact = inv(X'*inv(K + δ*I)*X)*X'*inv(K + δ*I)*y
     # Compare the two
     @test β ≈ β_exact atol=1e-6
+
+    # Do the same for the version without covariates
+    β0 = beta_mle_fullrank(δ, EF.values, yr)
+    β0_exact = 0.0
+    @test β0 ≈ β0_exact atol=1e-6
     
     # Compute the MLE of the variance using FastLMM
     σ² = sigma2_mle_fullrank(δ, EF.values, β, yr, Xr)
@@ -28,12 +33,29 @@ yr = EF.vectors' * y;
     σ²_exact = dot((y - yhat),  inv(K + δ*I) * (y - yhat)) / n
     # Compare the two
     @test σ² ≈ σ²_exact atol=1e-6
+
+    # Do the same for the version without covariates
+    σ²0 = sigma2_mle_fullrank(δ, EF.values, β0, yr)
+    σ²0_exact = dot(y, inv(K + δ*I) * y) / n
+    @test σ²0 ≈ σ²0_exact atol=1e-6
     
     # Compute the minus log-likelihood using FastLMM
-    log_like = minus_log_like_fullrank(δ; λ=EF.values, yr=yr, Xr=Xr)
+    log_like = minus_log_like_fullrank(δ, EF.values, yr, Xr)
     # Compute the minus log-likelihood using the exact formula
     log_like_exact = 0.5 * log(det(K + δ*I)) / n + 0.5 * log(σ²_exact)
     # Compare the two
     @test log_like ≈ log_like_exact atol=1e-6
+
+    # Do the same for the version without covariates
+    log_like0 = minus_log_like_fullrank(δ, EF.values, yr)
+    log_like0_exact = 0.5 * log(det(K + δ*I)) / n + 0.5 * log(σ²0_exact)
+    @test log_like0 ≈ log_like0_exact atol=1e-6
+
+    # Test if the minus log-likelihood function works on a vector of inputs
+    δs = [0.1, 0.5, 1.0]
+    f(δ) = minus_log_like_fullrank(δ, EF.values, yr, Xr)
+    log_likes = f.(δs)
+    log_likes_exact = [minus_log_like_fullrank(δ, EF.values, yr, Xr) for δ in δs]
+    @test log_likes ≈ log_likes_exact atol=1e-6
  end
 
