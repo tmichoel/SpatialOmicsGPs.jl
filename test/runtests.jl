@@ -1,4 +1,4 @@
-using SpatialTranscriptomicsGPs
+using SpatialOmicsGPs
 using Test
 
 using LinearAlgebra
