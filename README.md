@@ -1,4 +1,4 @@
-# SpatialTranscriptomicsGPs
+# SpatialOmicsGPs
 
 A crude (for now) implementation of various Gaussian process models for [spatial transcriptomics][4] data. Currently planned to contain implementations of:
 
