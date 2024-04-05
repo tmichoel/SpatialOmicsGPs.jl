@@ -1,4 +1,4 @@
-module SpatialTranscriptomicsGPs
+module SpatialOmicsGPs
 
 # Dependencies
 using LinearAlgebra
@@ -10,6 +10,6 @@ include("FaSTLMM.jl")
 
 
 # Exports
-export beta_mle_fullrank, sigma2_mle_fullrank, minus_log_like_fullrank, delta_mle_fullrank
+export fastlmm_fullrank, sigma2_mle_fullrank, minus_log_like_fullrank, delta_mle_fullrank, project_orth_covar, softplus
 
 end
