@@ -24,22 +24,6 @@ yr2 = U2' * y2;
 @testset "FaSTLMM full-rank tests" begin 
     # set a value for δ
     δ = 0.5
-    # Compute the MLE of the fixed effects weights using FastLMM
-    # β = beta_mle_fullrank(δ, EF.values, yr, Xr)
-    # # Compute the MLE of the fixed effects weights using the exact formula
-    # β_exact = inv(X'*inv(K + δ*I)*X)*X'*inv(K + δ*I)*y
-    # # Compare the two
-    # @test β ≈ β_exact atol=1e-6
-
-    # # Do the same for one covariate
-    # β1 = beta_mle_fullrank(δ, EF.values, yr, Xr[:,1])
-    # β1_exact = inv(X[:,1]'*inv(K + δ*I)*X[:,1])*X[:,1]'*inv(K + δ*I)*y
-    # @test β1 ≈ β1_exact atol=1e-6
-
-    # # Do the same without covariates
-    # β0 = beta_mle_fullrank(δ, EF.values, yr)
-    # β0_exact = 0.0
-    # @test β0 ≈ β0_exact atol=1e-6
     
     # Compute the MLE of the variance using FastLMM and zero covariates
     σ²0 = sigma2_mle_fullrank(δ, λ0, yr0)
@@ -54,7 +38,7 @@ yr2 = U2' * y2;
     σ²1_exact = dot((y - yhat1), inv(K + δ*I) * (y - yhat1)) / (n - 1)
     @test σ²1 ≈ σ²1_exact atol=1e-6
 
-    # Do the same with two covariates
+    # Do the same for two covariates
     σ²2 = sigma2_mle_fullrank(δ, λ2, yr2)
     yhat2 = X*inv(X'*inv(K + δ*I)*X)*X'*inv(K + δ*I)*y
     σ²2_exact = dot((y - yhat2), inv(K + δ*I) * (y - yhat2)) / (n - 2)
@@ -72,7 +56,7 @@ yr2 = U2' * y2;
     log_like1_exact = log(det(K + δ*I)) / (n-1) + log(det(X[:,1]' * inv(K + δ*I) * X[:,1])) / (n-1) - log(dot(X[:,1],X[:,1])) / (n-1) + log(σ²1_exact)
     @test log_like1 ≈ log_like1_exact atol=1e-6
 
-    # Do the same without covariates
+    # Do the same for two covariates
     log_like2 = minus_log_like_fullrank(δ, λ2, yr2)
     log_like2_exact = log(det(K + δ*I)) / (n-2) + log(det(X' * inv(K + δ*I) * X)) / (n-2) - log(det(X'*X)) / (n-2) + log(σ²2_exact)
     @test log_like2 ≈ log_like2_exact atol=1e-6

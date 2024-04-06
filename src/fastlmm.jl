@@ -1,13 +1,13 @@
 """
-    fastlmm_fullrank(y,X,K)
+    fastlmm_fullrank(y,K; covariates = [], mean = true)
 
-For a linear mixed model / Gaussian process with a full-rank kernel matrix,
+For a linear mixed model / Gaussian process,
 
 ```math
 y \\sim N\\bigl(X\\beta, \\sigma^2(K + \\delta I) \\bigr)
-``
+```
 
-where ``y`` is the response vector, ``X`` is a matrix of covariates,  and ``K`` is the kernel matrix, compute the REMLs of the variance parameter ``\\sigma^2`` and the variance ratio ``\\delta`` using FaST-LMM with a full-rank kernel matrix. Compared to the original FaST-LMM algorithm, we first project out the covariates from the response vector and the kernel matrix. This avoids all matrix computations in the variance parameter estimation, but means all variance estimates are restricted maximum-likelihood estimates (REML). Estimates for the fixed effects ``\\beta`` are not computed.
+where ``y`` is the response vector, ``X`` is a matrix of covariates,  and ``K`` is  a full-rank kernel matrix, compute the REMLs of the variance parameter ``\\sigma^2`` and the variance ratio ``\\delta`` using FaST-LMM with a full-rank kernel matrix. Compared to the original FaST-LMM algorithm, we first project out the (optional) covariates, incl. an (optional) constant off-set (`mean=true`), from the response vector and the kernel matrix. This avoids all matrix computations in the variance parameter estimation, but means all variance estimates are restricted maximum-likelihood estimates (REMLs). Estimates for the fixed effects ``\\beta`` are not computed.
 """
 function fastlmm_fullrank(y,K; covariates = [], mean = true)
     # Create covariate matrix X from the provided covariates with an intercept column if mean=true
@@ -32,13 +32,10 @@ function fastlmm_fullrank(y,K; covariates = [], mean = true)
     # Rotate the data
     yr = U' * y;
 
-    # Compute the MLE of the variance ration δ
+    # Compute the REML of the variance ration δ
     δ, res = delta_mle_fullrank(λ, yr);
 
-    # Compute the MLE of the fixed effects weights given δ
-    # β = beta_mle_fullrank(δ, λ, yr, Xr);
-
-    # Compute the MLE of the variance parameter given δ and β
+    # Compute the REML of the variance parameter σ²
     σ² = sigma2_mle_fullrank(δ, λ, yr);
 
     # return the MLEs and the optimization result
