@@ -1,7 +1,9 @@
-using SpatialOmicsGPs
-using Documenter
+push!(LOAD_PATH,"../src/")
 
-DocMeta.setdocmeta!(SpatialOmicsGPs, :DocTestSetup, :(using SpatialOmicsGPs); recursive=true)
+#using SpatialOmicsGPs
+using Documenter, SpatialOmicsGPs
+
+#DocMeta.setdocmeta!(SpatialOmicsGPs, :DocTestSetup, :(using SpatialOmicsGPs); recursive=true)
 
 makedocs(;
     modules=[SpatialOmicsGPs],
