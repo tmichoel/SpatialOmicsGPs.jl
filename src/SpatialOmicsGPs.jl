@@ -6,7 +6,7 @@ using Statistics
 using Optim
 
 # Code files
-include("FaSTLMM.jl")
+include("FaST-LMM.jl")
 
 
 # Exports

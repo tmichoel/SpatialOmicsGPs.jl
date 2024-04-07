@@ -7,7 +7,7 @@ using Statistics
 @testset "SpatialTranscriptomicsGPs.jl" begin
     @testset "FaSTLMM" begin
         @testset "FaSTLMM" begin
-            include("FaSTLMM_tests.jl")
+            include("FaST-LMM_tests.jl")
         end
     end
 end
