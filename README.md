@@ -18,7 +18,11 @@ A crude (for now) implementation of various Gaussian process models for [spatial
 
 I'm also hoping to implement the method of [Greengard et al.][3] to see if it leads to further speed-up.
 
-[![Build Status](https://github.com/tmichoel/SpatialTranscriptomicsGPs.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/tmichoel/SpatialTranscriptomicsGPs.jl/actions/workflows/CI.yml?query=branch%3Amaster)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://tmichoel.github.io/SpatialOmicsGPs.jl/stable/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tmichoel.github.io/SpatialOmicsGPs.jl/dev/)
+[![Build Status](https://github.com/tmichoel/SpatialOmicsGPs.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/tmichoel/SpatialOmicsGPs.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/tmichoel/SpatialOmicsGPs.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/tmichoel/SpatialOmicsGPs.jl)
+
 
 [1]: https://doi.org/10.1038%2Fnmeth.4636
 [2]: https://doi.org/10.1016/j.celrep.2019.08.077
