@@ -12,7 +12,7 @@ y = [0.25; 0.5; 0.25; 0.125] # response vector
 yr0 = U0' * y;
 
 # Do the eigendecomposition of the kernel matrix and rotation of the response vector for one covariate
-y1, K1 = project_orth_X(y, K, X[:,1]);
+y1, K1 = project_orth_covar(y, K, X[:,1]);
 λ1, U1 = eigen(K1);
 yr1 = U1' * y1;
 
