@@ -18,7 +18,7 @@ makedocs(;
     ),
     pages=[
         "Introduction" => "index.md",
-        "FaST-LMM" => "FaSTLMM.md",
+        "FaST-LMM" => "FaST-LMM.md",
         "List of functions" => "listfunctions.md"
     ],
 )
