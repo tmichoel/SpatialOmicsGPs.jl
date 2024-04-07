@@ -24,6 +24,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/tmichoel/SpatialOmics.jl",
+    repo="github.com/tmichoel/SpatialOmics.jl.git",
     devbranch="main",
 )
