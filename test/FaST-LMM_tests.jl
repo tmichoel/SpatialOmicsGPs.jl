@@ -17,11 +17,11 @@ y1, K1 = project_orth_covar(y, K, X[:,1]);
 yr1 = U1' * y1;
 
 # Do the eigendecomposition of the kernel matrix and rotation of the response vector for two covariates
-y2, K2 = project_orth_X(y, K, X);
+y2, K2 = project_orth_covar(y, K, X);
 λ2, U2 = eigen(K2);
 yr2 = U2' * y2;
 
-@testset "FaSTLMM full-rank tests" begin 
+@testset "FaST-LMM full-rank tests" begin 
     # set a value for δ
     δ = 0.5
     
