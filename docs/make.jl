@@ -10,7 +10,7 @@ makedocs(;
     sitename="SpatialOmics.jl",
     format=Documenter.HTML(;
         prettyurls=true,
-        canonical="https://tmichoel.github.io/SpatialOmics.jl",
+        canonical="https://tmichoel.github.io/SpatialOmicsGPs.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -22,6 +22,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/tmichoel/SpatialOmics.jl.git",
+    repo="github.com/tmichoel/SpatialOmicsGPs.jl.git",
     devbranch="main",
 )
