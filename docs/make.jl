@@ -7,8 +7,8 @@ using Documenter, SpatialOmicsGPs
 
 makedocs(;
     modules=[SpatialOmicsGPs],
+    sitename="SpatialOmics.jl",
     format=Documenter.HTML(;
-        sitename="SpatialOmics.jl",
         prettyurls=true,
         canonical="https://tmichoel.github.io/SpatialOmics.jl",
         edit_link="main",
