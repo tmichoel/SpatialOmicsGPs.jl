@@ -9,12 +9,12 @@ y \\sim N\\bigl(X\\beta, \\sigma^2(K + \\delta I) \\bigr)
 
 where ``y`` is the response vector, ``X`` is a matrix of covariates,  and ``K`` is  a full-rank kernel matrix, compute the REMLs of the variance parameter ``\\sigma^2`` and the variance ratio ``\\delta`` using FaST-LMM with a full-rank kernel matrix. Compared to the original FaST-LMM algorithm, we first project out the (optional) covariates, incl. an (optional) constant off-set (`mean=true`), from the response vector and the kernel matrix. This avoids all matrix computations in the variance parameter estimation, but means all variance estimates are restricted maximum-likelihood estimates (REMLs). Estimates for the fixed effects ``\\beta`` are not computed.
 """
-function fastlmm_fullrank(y,K; covariates = [], mean = true)
+function fastlmm_fullrank(y,K; covariates = [], mean = true, lambda_tol = 1e-3)
     # Create covariate matrix X from the provided covariates with an intercept column if mean=true
     if !isempty(covariates) 
         X = covariates
         if mean
-            X = hcat(ones(length(y)), X)
+            X = hcat(ones(size(K,1)), X)
         end
     elseif mean
         X = ones(length(y))    
@@ -29,9 +29,19 @@ function fastlmm_fullrank(y,K; covariates = [], mean = true)
     λ = EF.values;
     U = EF.vectors;
 
+    # Due to numerical issues, we set eigenvalues smaller than lambda_tol to zero
+    λ[λ .< lambda_tol] .= 0.0
+
     # Rotate the data
     yr = U' * y;
 
+    # # Compute the REMLs of the variance ratio δ and variance parameter σ² for each column of yr
+    # δs = zeros(size(yr,2));
+    # σ²s = zeros(size(yr,2));
+    # for i in eachindex(axes(yr)[2])
+    #     δs[i], res = delta_mle_fullrank(λ, yr[:,i]);
+    #     σ²s[i] = sigma2_mle_fullrank(δs[i], λ, yr[:,i]);
+    # end
     # Compute the REML of the variance ration δ
     δ, res = delta_mle_fullrank(λ, yr);
 
@@ -62,7 +72,7 @@ Compute the minus log-likelihood of the model, scaled by the number of samples a
 function minus_log_like_fullrank(δ, λ, yr)
     # Compute the minus log-likelihood of the model, scaled by half the number of samples and without constant factors
     σ² = sigma2_mle_fullrank(δ, λ, yr);
-    return  mean(log.(λ .+ δ)) .+ log(σ²)
+    return  mean(log.(abs.(λ .+ δ))) .+ log(σ²)
 end
 
 """

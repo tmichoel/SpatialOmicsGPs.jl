@@ -6,6 +6,7 @@ K = [1. .5 .25 .125;
     .125 .25 .5 1]; # kernel matrix
 X = [1. 1.; 1. 1.; 1. 0; 1. 0.] # fixed effects matrix
 y = [0.25; 0.5; 0.25; 0.125] # response vector
+y2 = [0.25 0.125; 0.5 0.25; 0.25 0.5; 0.125 0.25] # matrix with 2 response vectors
 
 # Do the eigendecomposition of the kernel matrix and rotation of the response vector for zero covariates
 λ0, U0 = eigen(K);

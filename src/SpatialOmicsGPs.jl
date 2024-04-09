@@ -4,6 +4,8 @@ module SpatialOmicsGPs
 using LinearAlgebra
 using Statistics
 using Optim
+using KernelFunctions
+using Distances
 
 # Code files
 include("FaST-LMM.jl")
