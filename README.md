@@ -9,7 +9,7 @@ A crude (for now) implementation of various Gaussian process models for [spatial
 
 **SpatialDE** [[Svensson et al.]][1]:
 
-- [ ] Variance parameter estimation in SpatialDE model
+- [x] Variance parameter estimation in SpatialDE model
 - [ ] Statistical significance of spatial vs. non-spatial covariance
 
 **Spatial Variance Component Analysis (SVCA)** [[Arnol et al.]][2]:
