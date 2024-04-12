@@ -10,7 +10,8 @@ A crude (for now) implementation of various Gaussian process models for [spatial
 **SpatialDE** [[Svensson et al.]][1]:
 
 - [x] Variance parameter estimation in SpatialDE model
-- [ ] Statistical significance of spatial vs. non-spatial covariance
+- [x] Statistical significance of spatial vs. non-spatial covariance
+- [ ] Expression histology
 
 **Spatial Variance Component Analysis (SVCA)** [[Arnol et al.]][2]:
 
