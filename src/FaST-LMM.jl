@@ -162,9 +162,13 @@ function project_orth_covar(y, K, X)
     U2 = U[:,length(S)+1:end];
     # Project out the covariates from the response vector and the kernel matrix
     y2 = U2' * y;
-    K2 = U2' * K * U2;
-    # make sure K2 is symmetric
-    K2 = (K2 + K2') / 2
+    if !isempty(K)
+        K2 = U2' * K * U2;
+        # make sure K2 is symmetric
+        K2 = (K2 + K2') / 2
+    else
+        K2 = []
+    end
     return y2, K2
 end
 
