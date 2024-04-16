@@ -1,7 +1,7 @@
 name = "SpatialOmicsGPs"
 uuid = "e145bb07-96d9-421f-b0a2-c579a69b21bf"
 authors = ["tmichoel <11647967+tmichoel@users.noreply.github.com> and contributors"]
-version = "0.0.1-DEV"
+version = "0.0.1"
 
 [deps]
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
