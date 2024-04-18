@@ -1,4 +1,9 @@
 
+"""
+    spatialDE(y,x::Union{RowVecs, ColVecs},n::Int; covariates = [], mean = true, names = [], lambda_tol = 1e-3)
+
+TBW
+"""
 function spatialDE(y,x::Union{RowVecs, ColVecs},n::Int; covariates = [], mean = true, names = [], lambda_tol = 1e-3)
     # do parameter inference for the spatialDE model
     σ²s, δs, minus_loglikes, fsv, lsid, ls = spatialde_param_inference(y, x, n; covariates = covariates, mean = mean, lambda_tol = lambda_tol)

@@ -1,6 +1,7 @@
 # SpatialDE
 
 ```@docs
+spatialDE
 spatialde_param_inference
 spatialde_pvalues
 spatialde_varpars_all
