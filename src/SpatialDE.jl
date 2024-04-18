@@ -1,4 +1,19 @@
 
+function spatialDE(y,x::Union{RowVecs, ColVecs},n::Int; covariates = [], mean = true, names = [], lambda_tol = 1e-3)
+    # do parameter inference for the spatialDE model
+    σ²s, δs, minus_loglikes, fsv, lsid, ls = spatialde_param_inference(y, x, n; covariates = covariates, mean = mean, lambda_tol = lambda_tol)
+    # get the null model parameters
+    σ²s_null, minus_loglikes_null = spatialde_varpars_null(y; covariates = covariates, mean = mean)
+    # get the p-values
+    pvals = spatialde_pvalues(minus_loglikes, minus_loglikes_null, size(y,1))
+    # return a dataframe with the results
+    df = DataFrame(σ² = σ²s, δ = δs, fsv = fsv, pvalue = pvals, lengthscale = ls[lsid], minus_loglike = minus_loglikes)
+    if !isempty(names)
+        insertcols!(df,1,:gene => names)
+    end
+    return df
+end
+
 """
     spatialde_param_inference(y,x::Union{RowVecs, ColVecs},n::Int; covariates = [], mean = true, lambda_tol = 1e-3)
 
@@ -75,7 +90,7 @@ function spatialde_varpars_all(y,x::Union{RowVecs, ColVecs},n::Int; covariates =
         lfsv[:,i] = tK ./ (tK .+ lδs[:,i])
     end
     # Return the results
-    return lσ²s, lδs, minus_loglikes, lfsv, lengthscales
+    return lσ²s, lδs, minus_loglikes, lfsv, ls
 end
 
 """
