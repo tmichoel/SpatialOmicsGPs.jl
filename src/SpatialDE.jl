@@ -12,7 +12,7 @@ function spatialDE(y,x::Union{RowVecs, ColVecs},n::Int; covariates = [], mean = 
     # get the p-values
     pvals = spatialde_pvalues(minus_loglikes, minus_loglikes_null, size(y,1))
     # return a dataframe with the results
-    df = DataFrame(σ² = σ²s, δ = δs, fsv = fsv, pvalue = pvals, lengthscale = ls[lsid], minus_loglike = minus_loglikes)
+    df = DataFrame(σ² = σ²s, δ = δs, fsv = fsv, pvalue = pvals, lengthscale = ls[lsid], loglikelihood = -minus_loglikes)
     if !isempty(names)
         insertcols!(df,1,:gene => names)
     end
