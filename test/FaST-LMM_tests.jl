@@ -4,7 +4,7 @@ K = [1. .5 .25 .125;
     .5 1. .5 .25;
     .25 .5 1. .5;
     .125 .25 .5 1]; # kernel matrix
-X = [1. 1.; 1. 1.; 1. 0; 1. 0.] # fixed effects matrix
+X = [1. 1.; 1. 0.; 0. 1.;  0. 1.] # fixed effects covariates
 y = [0.25; 0.5; 0.25; 0.125] # response vector
 y2 = [0.25 0.125; 0.5 0.25; 0.25 0.5; 0.125 0.25] # matrix with 2 response vectors
 
@@ -68,5 +68,16 @@ yr2 = U2' * y2;
     log_likes = f.(δs)
     log_likes_exact = [minus_log_like_fullrank(δ, λ0, yr0) for δ in δs]
     @test log_likes ≈ log_likes_exact atol=1e-6
+
+    # Test ML estimation of the fixed effects without overall mean
+    β = beta_mle_fullrank_lazy(y, K, X, σ²0, δ; mean=false)
+    β_exact = inv(X'*inv(K + δ*I)*X)*X'*inv(K + δ*I)*y
+    @test β ≈ β_exact atol=1e-6
+
+    # Test ML estimation of the fixed effects with overall mean
+    βm = beta_mle_fullrank_lazy(y, K, X, σ²0, δ; mean=true)
+    Xm = hcat(ones(n), X)
+    βm_exact = inv(Xm'*inv(K + δ*I)*Xm)*Xm'*inv(K + δ*I)*y
+    @test βm ≈ βm_exact atol=1e-6
  end
 
