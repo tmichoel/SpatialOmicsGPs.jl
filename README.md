@@ -2,11 +2,6 @@
 
 A crude (for now) implementation of various Gaussian process models for [spatial transcriptomics][4] data. Currently planned to contain implementations of:
 
-**FaST-LMM** [[Lippert et al.]][5]:
-
-- [x] LMMs/GPs with full-rank kernel matrix
-- [ ] LMMs/GPs with low-rank kernel matrix factorization
-
 **SpatialDE** [[Svensson et al.]][1]:
 
 - [x] Variance parameter estimation in SpatialDE model
@@ -17,7 +12,7 @@ A crude (for now) implementation of various Gaussian process models for [spatial
 
 - [ ] Variance parameter estimation in SVCE model
 
-I'm also hoping to implement the method of [Greengard et al.][3] to see if it leads to further speed-up.
+The package is developed in parallel with another package, [FaSTLMMlight](https://github.com/tmichoel/FaSTLMMlight.jl) that provides the variance parameter estimation methods used here.
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://tmichoel.github.io/SpatialOmicsGPs.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tmichoel.github.io/SpatialOmicsGPs.jl/dev/)
