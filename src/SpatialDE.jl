@@ -91,7 +91,7 @@ function spatialde_varpars_all(y,x::Union{RowVecs, ColVecs},n::Int; covariates =
         K = kernelmatrix(with_lengthscale(SqExponentialKernel(), ls[i]),x)
         tK = tr(K) / ns
         # Run FaST-LMM
-        lσ²s[:,i], lδs[:,i], minus_loglikes[:,i] = fastlmm_fullrank(y, K; covariates=covariates, mean=mean, lambda_tol = lambda_tol)
+        lσ²s[:,i], lδs[:,i], _ , minus_loglikes[:,i] = fastlmm_fullrank(y, K; covariates=covariates, mean=mean, lambda_tol = lambda_tol)
         lfsv[:,i] = tK ./ (tK .+ lδs[:,i])
     end
     # Return the results
@@ -109,13 +109,13 @@ function spatialde_varpars_null(y; covariates = [], mean = true)
     σ²s = zeros(n)
     minus_loglikes = zeros(n)
     # Project out the covariates
-    yr, - = project_orth_covar(y, [], covariates)
+    _ , yr , _, _ , _ , _ = svd_fixed_effects(y, [], covariates)
     nr = size(yr,1)
     # Loop over the variables
     for i in eachindex(σ²s)
-        σ²s[i] = sigma2_mle_fullrank(1.0, zeros(nr), yr[:,i])
+        σ²s[i] = sigma2_reml(1.0, zeros(nr), yr[:,i])
     end
-    minus_loglikes = log.(σ²s) # on the same scale and with the same factors removed as in simga2_mle_fullrank
+    minus_loglikes = log.(σ²s) # on the same scale and with the same factors removed as in simga2_reml
     # Return the results
     return σ²s, minus_loglikes
 end
