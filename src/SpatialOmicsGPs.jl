@@ -3,9 +3,9 @@ module SpatialOmicsGPs
 # Dependencies
 using LinearAlgebra
 using Statistics
-using Optim
-using KernelFunctions
-using Distances
+#using Optim
+#using KernelFunctions
+#using Distances
 using Distributions
 using DataFrames
 using FaSTLMMlight
