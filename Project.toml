@@ -16,7 +16,6 @@ DataFrames = "1"
 Distributions = "0.25"
 FaSTLMMlight = "0.0.3"
 KernelFunctions = "0.10"
-Optim = "1"
 Statistics = "1"
 julia = "1"
 
