@@ -4,7 +4,7 @@ module SpatialOmicsGPs
 using LinearAlgebra
 using Statistics
 #using Optim
-#using KernelFunctions
+using KernelFunctions
 #using Distances
 using Distributions
 using DataFrames
